@@ -662,54 +662,6 @@ function initializeApp() {
     setupEventListeners();
     updateCartBadge();
     updateWishlistBadge();
-    // Delay scroll animations slightly to ensure content is loaded first
-    setTimeout(initScrollAnimations, 100);
-}
-
-// ========== SCROLL ANIMATIONS ==========
-function initScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    // Observe sections for scroll animations (skip hero and menu sections)
-    const sections = document.querySelectorAll('section:not(.hero):not(.food-menu-section)');
-    sections.forEach(section => {
-        // Check if section is already in viewport
-        const rect = section.getBoundingClientRect();
-        const isInViewport = rect.top < window.innerHeight && rect.bottom >= 0;
-        
-        if (isInViewport) {
-            // If already visible, show it immediately
-            section.style.opacity = '1';
-            section.style.transform = 'translateY(0)';
-        } else {
-            // If not visible, prepare for animation
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(30px)';
-        }
-        
-        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(section);
-    });
-    
-    // Ensure menu section is always visible
-    const menuSection = document.querySelector('.food-menu-section');
-    if (menuSection) {
-        menuSection.style.opacity = '1';
-        menuSection.style.transform = 'translateY(0)';
-        menuSection.style.visibility = 'visible';
-    }
 }
 
 // ========== EVENT LISTENERS ==========
@@ -877,6 +829,13 @@ function loadThemeFromStorage() {
 
 // ========== MENU DISPLAY ==========
 function displayMenu(items = menuData) {
+    console.log('displayMenu called', {
+        menuDataLength: menuData.length,
+        currentFilter: currentFilter,
+        searchQuery: searchQuery,
+        menuGridElement: elements.menuGrid
+    });
+    
     const filteredItems = items.filter(item => {
         const matchesCategory = currentFilter === 'all' || item.category === currentFilter;
         const matchesSearch = !searchQuery || 
@@ -884,6 +843,8 @@ function displayMenu(items = menuData) {
             item.description.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesCategory && matchesSearch;
     });
+    
+    console.log('Filtered items:', filteredItems.length);
     
     if (filteredItems.length === 0) {
         elements.menuGrid.innerHTML = '';
@@ -893,7 +854,11 @@ function displayMenu(items = menuData) {
     
     elements.noResults.classList.remove('active');
     
-    elements.menuGrid.innerHTML = filteredItems.map(item => createMenuCard(item)).join('');
+    const htmlContent = filteredItems.map(item => createMenuCard(item)).join('');
+    console.log('Generated HTML length:', htmlContent.length);
+    
+    elements.menuGrid.innerHTML = htmlContent;
+    console.log('Menu grid updated, children count:', elements.menuGrid.children.length);
     
     // Add event listeners to "Add to Cart" buttons
     document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
@@ -929,20 +894,20 @@ function displayFeaturedItems() {
 function createMenuCard(item) {
     const isInWishlist = wishlist.some(w => w.id === item.id);
     return `
-        <div class="food-item-card">
-            <div class="food-item-img">
+        <div class="menu-card">
+            <div class="menu-image">
                 <button class="wishlist-heart-btn ${isInWishlist ? 'active' : ''}" data-id="${item.id}">
                     <i class="fas fa-heart"></i>
                 </button>
                 ${renderImageHTML(item.image, item.name)}
                 ${item.dietary && item.dietary.includes('vegetarian') ? 
-                    '<span class="diet-badge">Vegetarian</span>' : ''}
+                    '<span class="menu-badge">Vegetarian</span>' : ''}
             </div>
-            <div class="food-item-info">
-                <h3 class="food-item-name">${item.name}</h3>
-                <p class="food-item-desc">${item.description}</p>
-                <div class="food-item-bottom">
-                    <span class="food-item-price">$${item.price.toFixed(2)}</span>
+            <div class="menu-content">
+                <h3 class="menu-title">${item.name}</h3>
+                <p class="menu-description">${item.description}</p>
+                <div class="menu-footer">
+                    <span class="menu-price">$${item.price.toFixed(2)}</span>
                     <button class="add-to-cart-btn" data-id="${item.id}">
                         <i class="fas fa-plus"></i> Add
                     </button>
@@ -1527,3 +1492,29 @@ function debounce(func, wait) {
         timeout = setTimeout(later, wait);
     };
 }
+
+// ========== SCROLL ANIMATIONS (Optional) ==========
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Observe sections for scroll animations
+document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(section);
+    });
+});

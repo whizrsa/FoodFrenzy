@@ -514,60 +514,6 @@ const menuData = [
         price: 2.49,
         image: 'https://images.unsplash.com/photo-1523362628745-0c100150b504?w=800&auto=format&fit=crop',
         dietary: ['vegan']
-    },
-    {
-        id: 59,
-        name: 'Cappuccino',
-        category: 'beverages',
-        description: 'Classic Italian coffee with steamed milk and foam',
-        price: 4.49,
-        image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=800&auto=format&fit=crop',
-        dietary: ['vegetarian']
-    },
-    {
-        id: 60,
-        name: 'Lemonade',
-        category: 'beverages',
-        description: 'Freshly squeezed lemonade with mint',
-        price: 3.99,
-        image: 'https://images.unsplash.com/photo-1583064313642-a7c149480c7e?w=800&auto=format&fit=crop',
-        dietary: ['vegan']
-    },
-    {
-        id: 61,
-        name: 'Mango Lassi',
-        category: 'beverages',
-        description: 'Traditional Indian yogurt drink with mango',
-        price: 5.49,
-        image: 'https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=800&auto=format&fit=crop',
-        dietary: ['vegetarian']
-    },
-    {
-        id: 62,
-        name: 'Matcha Latte',
-        category: 'beverages',
-        description: 'Japanese green tea latte with steamed milk',
-        price: 5.99,
-        image: 'https://images.unsplash.com/photo-1536013089549-e7f9d1596194?w=800&auto=format&fit=crop',
-        dietary: ['vegetarian']
-    },
-    {
-        id: 63,
-        name: 'Fresh Mint Tea',
-        category: 'beverages',
-        description: 'Moroccan-style mint tea served hot',
-        price: 3.49,
-        image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800&auto=format&fit=crop',
-        dietary: ['vegan']
-    },
-    {
-        id: 64,
-        name: 'Watermelon Juice',
-        category: 'beverages',
-        description: 'Freshly pressed watermelon juice',
-        price: 4.99,
-        image: 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=800&auto=format&fit=crop',
-        dietary: ['vegan']
     }
 ];
 
@@ -662,54 +608,6 @@ function initializeApp() {
     setupEventListeners();
     updateCartBadge();
     updateWishlistBadge();
-    // Delay scroll animations slightly to ensure content is loaded first
-    setTimeout(initScrollAnimations, 100);
-}
-
-// ========== SCROLL ANIMATIONS ==========
-function initScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    // Observe sections for scroll animations (skip hero and menu sections)
-    const sections = document.querySelectorAll('section:not(.hero):not(.food-menu-section)');
-    sections.forEach(section => {
-        // Check if section is already in viewport
-        const rect = section.getBoundingClientRect();
-        const isInViewport = rect.top < window.innerHeight && rect.bottom >= 0;
-        
-        if (isInViewport) {
-            // If already visible, show it immediately
-            section.style.opacity = '1';
-            section.style.transform = 'translateY(0)';
-        } else {
-            // If not visible, prepare for animation
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(30px)';
-        }
-        
-        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(section);
-    });
-    
-    // Ensure menu section is always visible
-    const menuSection = document.querySelector('.food-menu-section');
-    if (menuSection) {
-        menuSection.style.opacity = '1';
-        menuSection.style.transform = 'translateY(0)';
-        menuSection.style.visibility = 'visible';
-    }
 }
 
 // ========== EVENT LISTENERS ==========
@@ -929,20 +827,20 @@ function displayFeaturedItems() {
 function createMenuCard(item) {
     const isInWishlist = wishlist.some(w => w.id === item.id);
     return `
-        <div class="food-item-card">
-            <div class="food-item-img">
+        <div class="menu-card">
+            <div class="menu-image">
                 <button class="wishlist-heart-btn ${isInWishlist ? 'active' : ''}" data-id="${item.id}">
                     <i class="fas fa-heart"></i>
                 </button>
                 ${renderImageHTML(item.image, item.name)}
                 ${item.dietary && item.dietary.includes('vegetarian') ? 
-                    '<span class="diet-badge">Vegetarian</span>' : ''}
+                    '<span class="menu-badge">Vegetarian</span>' : ''}
             </div>
-            <div class="food-item-info">
-                <h3 class="food-item-name">${item.name}</h3>
-                <p class="food-item-desc">${item.description}</p>
-                <div class="food-item-bottom">
-                    <span class="food-item-price">$${item.price.toFixed(2)}</span>
+            <div class="menu-content">
+                <h3 class="menu-title">${item.name}</h3>
+                <p class="menu-description">${item.description}</p>
+                <div class="menu-footer">
+                    <span class="menu-price">$${item.price.toFixed(2)}</span>
                     <button class="add-to-cart-btn" data-id="${item.id}">
                         <i class="fas fa-plus"></i> Add
                     </button>
@@ -1527,3 +1425,29 @@ function debounce(func, wait) {
         timeout = setTimeout(later, wait);
     };
 }
+
+// ========== SCROLL ANIMATIONS (Optional) ==========
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Observe sections for scroll animations
+document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(section);
+    });
+});

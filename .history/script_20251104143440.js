@@ -682,8 +682,8 @@ function initScrollAnimations() {
         });
     }, observerOptions);
 
-    // Observe sections for scroll animations (skip hero and menu sections)
-    const sections = document.querySelectorAll('section:not(.hero):not(.food-menu-section)');
+    // Observe sections for scroll animations (skip hero section)
+    const sections = document.querySelectorAll('section:not(.hero)');
     sections.forEach(section => {
         // Check if section is already in viewport
         const rect = section.getBoundingClientRect();
@@ -702,14 +702,6 @@ function initScrollAnimations() {
         section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(section);
     });
-    
-    // Ensure menu section is always visible
-    const menuSection = document.querySelector('.food-menu-section');
-    if (menuSection) {
-        menuSection.style.opacity = '1';
-        menuSection.style.transform = 'translateY(0)';
-        menuSection.style.visibility = 'visible';
-    }
 }
 
 // ========== EVENT LISTENERS ==========
@@ -929,20 +921,20 @@ function displayFeaturedItems() {
 function createMenuCard(item) {
     const isInWishlist = wishlist.some(w => w.id === item.id);
     return `
-        <div class="food-item-card">
-            <div class="food-item-img">
+        <div class="menu-card">
+            <div class="menu-image">
                 <button class="wishlist-heart-btn ${isInWishlist ? 'active' : ''}" data-id="${item.id}">
                     <i class="fas fa-heart"></i>
                 </button>
                 ${renderImageHTML(item.image, item.name)}
                 ${item.dietary && item.dietary.includes('vegetarian') ? 
-                    '<span class="diet-badge">Vegetarian</span>' : ''}
+                    '<span class="menu-badge">Vegetarian</span>' : ''}
             </div>
-            <div class="food-item-info">
-                <h3 class="food-item-name">${item.name}</h3>
-                <p class="food-item-desc">${item.description}</p>
-                <div class="food-item-bottom">
-                    <span class="food-item-price">$${item.price.toFixed(2)}</span>
+            <div class="menu-content">
+                <h3 class="menu-title">${item.name}</h3>
+                <p class="menu-description">${item.description}</p>
+                <div class="menu-footer">
+                    <span class="menu-price">$${item.price.toFixed(2)}</span>
                     <button class="add-to-cart-btn" data-id="${item.id}">
                         <i class="fas fa-plus"></i> Add
                     </button>

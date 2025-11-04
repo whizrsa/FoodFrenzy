@@ -682,8 +682,8 @@ function initScrollAnimations() {
         });
     }, observerOptions);
 
-    // Observe sections for scroll animations (skip hero and menu sections)
-    const sections = document.querySelectorAll('section:not(.hero):not(.food-menu-section)');
+    // Observe sections for scroll animations (skip hero section)
+    const sections = document.querySelectorAll('section:not(.hero)');
     sections.forEach(section => {
         // Check if section is already in viewport
         const rect = section.getBoundingClientRect();
@@ -702,14 +702,6 @@ function initScrollAnimations() {
         section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(section);
     });
-    
-    // Ensure menu section is always visible
-    const menuSection = document.querySelector('.food-menu-section');
-    if (menuSection) {
-        menuSection.style.opacity = '1';
-        menuSection.style.transform = 'translateY(0)';
-        menuSection.style.visibility = 'visible';
-    }
 }
 
 // ========== EVENT LISTENERS ==========

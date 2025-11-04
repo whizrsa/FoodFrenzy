@@ -223,98 +223,6 @@ const menuData = [
         price: 17.99,
         image: 'https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=800&auto=format&fit=crop'
     },
-    {
-        id: 43,
-        name: 'Lobster Roll',
-        category: 'main',
-        description: 'Fresh lobster meat in a buttered roll with mayo',
-        price: 26.99,
-        image: 'https://images.unsplash.com/photo-1625938146369-9b6e24c6e5e6?w=800&auto=format&fit=crop'
-    },
-    {
-        id: 44,
-        name: 'Pulled Pork Sandwich',
-        category: 'main',
-        description: 'Slow-cooked pulled pork with BBQ sauce on a brioche bun',
-        price: 13.99,
-        image: 'https://images.unsplash.com/photo-1619221882420-7a0e3c64e6c0?w=800&auto=format&fit=crop'
-    },
-    {
-        id: 45,
-        name: 'Sushi Platter',
-        category: 'main',
-        description: 'Assorted sushi rolls with wasabi and ginger',
-        price: 22.99,
-        image: 'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=800&auto=format&fit=crop'
-    },
-    {
-        id: 46,
-        name: 'Mushroom Risotto',
-        category: 'main',
-        description: 'Creamy arborio rice with wild mushrooms and parmesan',
-        price: 17.99,
-        image: 'https://images.unsplash.com/photo-1476124369491-c217e42e5443?w=800&auto=format&fit=crop',
-        dietary: ['vegetarian']
-    },
-    {
-        id: 47,
-        name: 'Beef Burrito',
-        category: 'main',
-        description: 'Large flour tortilla filled with seasoned beef, rice, and beans',
-        price: 12.99,
-        image: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=800&auto=format&fit=crop'
-    },
-    {
-        id: 48,
-        name: 'Chicken Quesadilla',
-        category: 'main',
-        description: 'Grilled tortilla with chicken, cheese, and peppers',
-        price: 11.99,
-        image: 'https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=800&auto=format&fit=crop'
-    },
-    {
-        id: 49,
-        name: 'Pad Thai',
-        category: 'main',
-        description: 'Thai stir-fried noodles with shrimp, peanuts, and tamarind',
-        price: 15.99,
-        image: 'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&auto=format&fit=crop'
-    },
-    {
-        id: 50,
-        name: 'Lamb Chops',
-        category: 'main',
-        description: 'Grilled lamb chops with mint sauce and roasted potatoes',
-        price: 29.99,
-        image: 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=800&auto=format&fit=crop',
-        featured: true
-    },
-    {
-        id: 51,
-        name: 'Falafel Wrap',
-        category: 'main',
-        description: 'Crispy falafel with hummus, tahini, and fresh vegetables',
-        price: 10.99,
-        image: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=800&auto=format&fit=crop',
-        dietary: ['vegetarian', 'vegan']
-    },
-    {
-        id: 52,
-        name: 'Chicken Tikka Masala',
-        category: 'main',
-        description: 'Tender chicken in spiced tomato cream sauce with naan',
-        price: 16.99,
-        image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&auto=format&fit=crop'
-    },
-    {
-        id: 53,
-        name: 'Penne Arrabiata',
-        category: 'main',
-        description: 'Penne pasta in spicy tomato sauce with garlic and chili',
-        price: 13.99,
-        image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800&auto=format&fit=crop',
-        dietary: ['vegetarian']
-    },
     
     // Desserts
     {
@@ -381,51 +289,6 @@ const menuData = [
         description: 'Light and airy chocolate mousse with whipped cream',
         price: 7.99,
         image: 'https://images.unsplash.com/photo-1541599468348-e96984315921?w=800&auto=format&fit=crop'
-    },
-    {
-        id: 54,
-        name: 'Panna Cotta',
-        category: 'desserts',
-        description: 'Italian cream dessert with berry compote',
-        price: 8.49,
-        image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&auto=format&fit=crop'
-    },
-    {
-        id: 55,
-        name: 'Churros',
-        category: 'desserts',
-        description: 'Spanish fried dough with cinnamon sugar and chocolate sauce',
-        price: 6.99,
-        image: 'https://images.unsplash.com/photo-1590952546074-8fd1c7f23aae?w=800&auto=format&fit=crop',
-        dietary: ['vegetarian']
-    },
-    {
-        id: 56,
-        name: 'Macarons',
-        category: 'desserts',
-        description: 'French almond cookies in assorted flavors (6 pieces)',
-        price: 9.99,
-        image: 'https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=800&auto=format&fit=crop',
-        dietary: ['vegetarian']
-    },
-    {
-        id: 57,
-        name: 'Banana Split',
-        category: 'desserts',
-        description: 'Three scoops of ice cream with banana, nuts, and toppings',
-        price: 8.99,
-        image: 'https://images.unsplash.com/photo-1563379091339-03b47888c235?w=800&auto=format&fit=crop',
-        dietary: ['vegetarian']
-    },
-    {
-        id: 58,
-        name: 'Red Velvet Cake',
-        category: 'desserts',
-        description: 'Classic red velvet cake with cream cheese frosting',
-        price: 7.99,
-        image: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&auto=format&fit=crop',
-        dietary: ['vegetarian'],
-        featured: true
     },
     
     // Beverages
@@ -513,60 +376,6 @@ const menuData = [
         description: 'Refreshing sparkling mineral water',
         price: 2.49,
         image: 'https://images.unsplash.com/photo-1523362628745-0c100150b504?w=800&auto=format&fit=crop',
-        dietary: ['vegan']
-    },
-    {
-        id: 59,
-        name: 'Cappuccino',
-        category: 'beverages',
-        description: 'Classic Italian coffee with steamed milk and foam',
-        price: 4.49,
-        image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=800&auto=format&fit=crop',
-        dietary: ['vegetarian']
-    },
-    {
-        id: 60,
-        name: 'Lemonade',
-        category: 'beverages',
-        description: 'Freshly squeezed lemonade with mint',
-        price: 3.99,
-        image: 'https://images.unsplash.com/photo-1583064313642-a7c149480c7e?w=800&auto=format&fit=crop',
-        dietary: ['vegan']
-    },
-    {
-        id: 61,
-        name: 'Mango Lassi',
-        category: 'beverages',
-        description: 'Traditional Indian yogurt drink with mango',
-        price: 5.49,
-        image: 'https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=800&auto=format&fit=crop',
-        dietary: ['vegetarian']
-    },
-    {
-        id: 62,
-        name: 'Matcha Latte',
-        category: 'beverages',
-        description: 'Japanese green tea latte with steamed milk',
-        price: 5.99,
-        image: 'https://images.unsplash.com/photo-1536013089549-e7f9d1596194?w=800&auto=format&fit=crop',
-        dietary: ['vegetarian']
-    },
-    {
-        id: 63,
-        name: 'Fresh Mint Tea',
-        category: 'beverages',
-        description: 'Moroccan-style mint tea served hot',
-        price: 3.49,
-        image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800&auto=format&fit=crop',
-        dietary: ['vegan']
-    },
-    {
-        id: 64,
-        name: 'Watermelon Juice',
-        category: 'beverages',
-        description: 'Freshly pressed watermelon juice',
-        price: 4.99,
-        image: 'https://images.unsplash.com/photo-1546548970-71785318a17b?w=800&auto=format&fit=crop',
         dietary: ['vegan']
     }
 ];
@@ -662,54 +471,6 @@ function initializeApp() {
     setupEventListeners();
     updateCartBadge();
     updateWishlistBadge();
-    // Delay scroll animations slightly to ensure content is loaded first
-    setTimeout(initScrollAnimations, 100);
-}
-
-// ========== SCROLL ANIMATIONS ==========
-function initScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    // Observe sections for scroll animations (skip hero and menu sections)
-    const sections = document.querySelectorAll('section:not(.hero):not(.food-menu-section)');
-    sections.forEach(section => {
-        // Check if section is already in viewport
-        const rect = section.getBoundingClientRect();
-        const isInViewport = rect.top < window.innerHeight && rect.bottom >= 0;
-        
-        if (isInViewport) {
-            // If already visible, show it immediately
-            section.style.opacity = '1';
-            section.style.transform = 'translateY(0)';
-        } else {
-            // If not visible, prepare for animation
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(30px)';
-        }
-        
-        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(section);
-    });
-    
-    // Ensure menu section is always visible
-    const menuSection = document.querySelector('.food-menu-section');
-    if (menuSection) {
-        menuSection.style.opacity = '1';
-        menuSection.style.transform = 'translateY(0)';
-        menuSection.style.visibility = 'visible';
-    }
 }
 
 // ========== EVENT LISTENERS ==========
@@ -929,20 +690,20 @@ function displayFeaturedItems() {
 function createMenuCard(item) {
     const isInWishlist = wishlist.some(w => w.id === item.id);
     return `
-        <div class="food-item-card">
-            <div class="food-item-img">
+        <div class="menu-card">
+            <div class="menu-image">
                 <button class="wishlist-heart-btn ${isInWishlist ? 'active' : ''}" data-id="${item.id}">
                     <i class="fas fa-heart"></i>
                 </button>
                 ${renderImageHTML(item.image, item.name)}
                 ${item.dietary && item.dietary.includes('vegetarian') ? 
-                    '<span class="diet-badge">Vegetarian</span>' : ''}
+                    '<span class="menu-badge">Vegetarian</span>' : ''}
             </div>
-            <div class="food-item-info">
-                <h3 class="food-item-name">${item.name}</h3>
-                <p class="food-item-desc">${item.description}</p>
-                <div class="food-item-bottom">
-                    <span class="food-item-price">$${item.price.toFixed(2)}</span>
+            <div class="menu-content">
+                <h3 class="menu-title">${item.name}</h3>
+                <p class="menu-description">${item.description}</p>
+                <div class="menu-footer">
+                    <span class="menu-price">$${item.price.toFixed(2)}</span>
                     <button class="add-to-cart-btn" data-id="${item.id}">
                         <i class="fas fa-plus"></i> Add
                     </button>
@@ -1527,3 +1288,29 @@ function debounce(func, wait) {
         timeout = setTimeout(later, wait);
     };
 }
+
+// ========== SCROLL ANIMATIONS (Optional) ==========
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Observe sections for scroll animations
+document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(section);
+    });
+});
