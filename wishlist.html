@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Wishlist - FoodFrenzy</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-wrapper">
+          <a href="index.html" class="logo">
+            <i class="fas fa-utensils"></i>
+            <span>Food<span class="logo-accent">Frenzy</span></span>
+          </a>
+          <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="index.html#menu" class="nav-link">Menu</a></li>
+            <li><a href="cart.html" class="nav-link">
+              <i class="fas fa-shopping-cart"></i> Cart
+            </a></li>
+          </ul>
+          <div class="nav-icons">
+            <a href="index.html#menu" class="btn btn-secondary">
+              <i class="fas fa-arrow-left"></i> Continue Shopping
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="wishlist-page-main">
+    <div class="container">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="breadcrumb">
+          <a href="index.html"><i class="fas fa-home"></i> Home</a>
+          <span><i class="fas fa-chevron-right"></i></span>
+          <span class="current">Wishlist</span>
+        </div>
+        <h1 class="page-title">
+          <i class="fas fa-heart"></i>
+          My Wishlist
+        </h1>
+        <p class="page-subtitle">Your favorite dishes saved for later</p>
+      </div>
+
+      <!-- Wishlist Controls -->
+      <div class="wishlist-controls">
+        <div class="wishlist-count">
+          <span id="itemCount">0</span> items saved
+        </div>
+        <button class="btn-clear-wishlist" id="clearWishlistBtn" style="display: none;">
+          <i class="fas fa-trash-alt"></i> Clear Wishlist
+        </button>
+      </div>
+
+      <!-- Wishlist Grid -->
+      <div id="wishlistGrid" class="wishlist-grid">
+        <!-- Wishlist items rendered here by JavaScript -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-simple">
+        <p>&copy; 2025 FoodFrenzy. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="index.html#about">About</a>
+          <a href="index.html#contact">Contact</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<script>
+// Enhanced Wishlist Page Script
+const STORAGE_KEY = 'foodfrenzy_wishlist';
+const CART_KEY = 'foodfrenzy_cart';
+
+function loadWishlist() { 
+  const raw = localStorage.getItem(STORAGE_KEY); 
+  return raw ? JSON.parse(raw) : []; 
+}
+
+function saveWishlist(w) { 
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(w)); 
+}
+
+function loadCart() { 
+  const raw = localStorage.getItem(CART_KEY); 
+  return raw ? JSON.parse(raw) : []; 
+}
+
+function saveCart(c) { 
+  localStorage.setItem(CART_KEY, JSON.stringify(c)); 
+}
+
+function formatCurrency(n) { 
+  return '$' + n.toFixed(2); 
+}
+
+function renderImageHTML(image, alt = '') {
+  if (typeof image === 'string' && (
+    image.startsWith('assets/') || 
+    image.startsWith('./assets/') || 
+    image.startsWith('/assets/') ||
+    image.startsWith('http://') ||
+    image.startsWith('https://')
+  )) {
+    return `<img src="${image}" alt="${alt}" />`;
+  }
+  return `<span class="emoji-fallback">${image || '❤️'}</span>`;
+}
+
+function renderWishlist() {
+  const list = loadWishlist();
+  const container = document.getElementById('wishlistGrid');
+  const countEl = document.getElementById('itemCount');
+  const clearBtn = document.getElementById('clearWishlistBtn');
+  
+  if (!container) return;
+  
+  countEl.textContent = list.length;
+  
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div class="wishlist-empty-state">
+        <div class="empty-icon">
+          <i class="fas fa-heart-broken"></i>
+        </div>
+        <h3>Your wishlist is empty</h3>
+        <p>Start adding your favorite dishes to save them for later</p>
+        <a href="index.html#menu" class="btn btn-primary btn-large">
+          <i class="fas fa-utensils"></i>
+          Explore Menu
+        </a>
+      </div>
+    `;
+    clearBtn.style.display = 'none';
+    return;
+  }
+
+  clearBtn.style.display = 'inline-flex';
+
+  const html = list.map(item => `
+    <div class="wishlist-card">
+      <button class="wishlist-remove-btn" data-id="${item.id}" title="Remove from wishlist">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="wishlist-card-image">
+        ${renderImageHTML(item.image, item.name)}
+        <div class="wishlist-heart-badge">
+          <i class="fas fa-heart"></i>
+        </div>
+      </div>
+      <div class="wishlist-card-content">
+        <h3 class="wishlist-item-name">${item.name}</h3>
+        <p class="wishlist-item-description">${item.description || ''}</p>
+        <div class="wishlist-card-footer">
+          <span class="wishlist-item-price">${formatCurrency(item.price)}</span>
+          <button class="btn-add-to-cart" data-id="${item.id}">
+            <i class="fas fa-shopping-cart"></i>
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  container.innerHTML = html;
+
+  // Attach event listeners
+  document.querySelectorAll('.btn-add-to-cart').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = parseInt(btn.dataset.id);
+      addToCartFromWishlist(id);
+    });
+  });
+
+  document.querySelectorAll('.wishlist-remove-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = parseInt(btn.dataset.id);
+      removeFromWishlist(id);
+    });
+  });
+}
+
+function addToCartFromWishlist(id) {
+  const cart = loadCart();
+  const wishlist = loadWishlist();
+  const item = wishlist.find(i => i.id === id);
+  
+  if (!item) return;
+  
+  const existing = cart.find(i => i.id === id);
+  
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ ...item, quantity: 1 });
+  }
+  
+  saveCart(cart);
+  
+  // Show success message
+  showNotification(`${item.name} added to cart!`);
+  
+  // Optional: Remove from wishlist after adding to cart
+  // removeFromWishlist(id);
+}
+
+function removeFromWishlist(id) {
+  let list = loadWishlist();
+  const item = list.find(i => i.id === id);
+  
+  if (item && confirm(`Remove ${item.name} from wishlist?`)) {
+    list = list.filter(i => i.id !== id);
+    saveWishlist(list);
+    renderWishlist();
+    showNotification(`${item.name} removed from wishlist`);
+  }
+}
+
+function showNotification(message) {
+  // Create a temporary notification
+  const notification = document.createElement('div');
+  notification.className = 'wishlist-notification';
+  notification.innerHTML = `
+    <i class="fas fa-check-circle"></i>
+    <span>${message}</span>
+  `;
+  document.body.appendChild(notification);
+  
+  setTimeout(() => notification.classList.add('show'), 10);
+  
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => notification.remove(), 300);
+  }, 3000);
+}
+
+// Clear wishlist button
+document.getElementById('clearWishlistBtn').addEventListener('click', () => {
+  if (confirm('Are you sure you want to clear your entire wishlist?')) {
+    localStorage.removeItem(STORAGE_KEY);
+    renderWishlist();
+  }
+});
+
+// Initial render
+renderWishlist();
+</script>
+</body>
+</html>
