@@ -585,8 +585,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize DOM elements after DOM is loaded
     elements = {
         // Navigation
-    // Only anchor links, exclude buttons with .nav-link styling
-    navLinks: document.querySelectorAll('a.nav-link'),
+        navLinks: document.querySelectorAll('.nav-link'),
         mobileToggle: document.getElementById('mobileToggle'),
         navMenu: document.getElementById('navMenu'),
         themeToggle: document.getElementById('themeToggle'),
@@ -762,31 +761,17 @@ function setupEventListeners() {
         link.addEventListener('click', handleNavClick);
     });
     
-    if (elements.mobileToggle) {
-        elements.mobileToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMobileMenu();
-        });
-        elements.mobileToggle.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMobileMenu();
-        });
-    }
+    elements.mobileToggle.addEventListener('click', toggleMobileMenu);
+    elements.mobileToggle.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        toggleMobileMenu();
+    });
     
-    if (elements.themeToggle) {
-        elements.themeToggle.addEventListener('click', function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            toggleTheme();
-        });
-        elements.themeToggle.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleTheme();
-        });
-    }
+    elements.themeToggle.addEventListener('click', toggleTheme);
+    elements.themeToggle.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        toggleTheme();
+    });
     
     elements.orderNowBtn.addEventListener('click', () => scrollToSection('menu'));
     
@@ -899,29 +884,27 @@ function setupEventListeners() {
 
 // ========== NAVIGATION ==========
 function handleNavClick(e) {
-    const href = e.currentTarget.getAttribute('href') || '';
-    // Internal section navigation (hash links)
-    if (href.startsWith('#')) {
-        e.preventDefault();
-        const section = href.slice(1);
-        scrollToSection(section);
-        // Close mobile menu if open
-        if (elements.navMenu) elements.navMenu.classList.remove('active');
-        if (elements.mobileToggle) elements.mobileToggle.classList.remove('active');
-        // Update active state
-        elements.navLinks.forEach(link => link.classList.remove('active'));
-        e.currentTarget.classList.add('active');
-        return;
-    }
-    // External/page navigation (e.g., cart.html, wishlist.html)
-    // Let the browser navigate normally; also close menu quickly for UX
-    if (elements.navMenu) elements.navMenu.classList.remove('active');
-    if (elements.mobileToggle) elements.mobileToggle.classList.remove('active');
+    e.preventDefault();
+    const href = e.target.getAttribute('href');
+    const section = href.substring(1);
+    scrollToSection(section);
+    
+    // Close mobile menu if open
+    elements.navMenu.classList.remove('active');
+    
+    // Update active state
+    elements.navLinks.forEach(link => link.classList.remove('active'));
+    e.target.classList.add('active');
 }
 
 function toggleMobileMenu() {
+    console.log('Toggle mobile menu clicked');
+    console.log('navMenu element:', elements.navMenu);
+    console.log('mobileToggle element:', elements.mobileToggle);
+    
     if (elements.navMenu) {
         elements.navMenu.classList.toggle('active');
+        console.log('navMenu active class:', elements.navMenu.classList.contains('active'));
     }
     if (elements.mobileToggle) {
         elements.mobileToggle.classList.toggle('active');
