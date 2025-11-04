@@ -3215,38 +3215,4 @@ body.dark-mode .food-item-bottom {
     .food-item-price {
         font-size: 1.5rem;
     }
-    
-    /* Ensure all buttons are clickable on small screens */
-    button,
-    .btn,
-    .filter-btn,
-    .add-to-cart-btn,
-    .mobile-toggle,
-    .theme-toggle {
-        min-height: 44px;
-        min-width: 44px;
-        touch-action: manipulation;
-        -webkit-tap-highlight-color: rgba(255, 0, 0, 0.1);
-    }
-    
-    /* Prevent zoom on input focus */
-    input,
-    select,
-    textarea {
-        font-size: 16px;
-    }
-}
-
-/* Fix for iOS Safari button issues */
-button {
-    -webkit-appearance: button;
-    appearance: button;
-}
-
-input[type="button"],
-input[type="submit"],
-button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
 }

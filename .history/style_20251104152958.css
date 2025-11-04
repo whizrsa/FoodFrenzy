@@ -658,13 +658,9 @@ section {
     font-weight: 600;
     cursor: pointer;
     transition: all var(--transition-speed) var(--transition-ease);
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    user-select: none;
 }
 
-.filter-btn:hover,
-.filter-btn:active {
+.filter-btn:hover {
     background-color: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
@@ -3215,38 +3211,4 @@ body.dark-mode .food-item-bottom {
     .food-item-price {
         font-size: 1.5rem;
     }
-    
-    /* Ensure all buttons are clickable on small screens */
-    button,
-    .btn,
-    .filter-btn,
-    .add-to-cart-btn,
-    .mobile-toggle,
-    .theme-toggle {
-        min-height: 44px;
-        min-width: 44px;
-        touch-action: manipulation;
-        -webkit-tap-highlight-color: rgba(255, 0, 0, 0.1);
-    }
-    
-    /* Prevent zoom on input focus */
-    input,
-    select,
-    textarea {
-        font-size: 16px;
-    }
-}
-
-/* Fix for iOS Safari button issues */
-button {
-    -webkit-appearance: button;
-    appearance: button;
-}
-
-input[type="button"],
-input[type="submit"],
-button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
 }
