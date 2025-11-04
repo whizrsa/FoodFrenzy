@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Wishlist - FoodFrenzy</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-wrapper">
+          <a href="index.html" class="logo">
+            <i class="fas fa-utensils"></i>
+            <span>Food<span class="logo-accent">Frenzy</span></span>
+          </a>
+          <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="index.html#menu" class="nav-link">Menu</a></li>
+            <li><a href="cart.html" class="nav-link">
+              <i class="fas fa-shopping-cart"></i> Cart
+            </a></li>
+          </ul>
+          <div class="nav-icons">
+            <a href="index.html#menu" class="btn btn-secondary">
+              <i class="fas fa-arrow-left"></i> Continue Shopping
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="wishlist-page-main">
+    <div class="container">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="breadcrumb">
+          <a href="index.html"><i class="fas fa-home"></i> Home</a>
+          <span><i class="fas fa-chevron-right"></i></span>
+          <span class="current">Wishlist</span>
+        </div>
+        <h1 class="page-title">
+          <i class="fas fa-heart"></i>
+          My Wishlist
+        </h1>
+        <p class="page-subtitle">Your favorite dishes saved for later</p>
+      </div>
+
+      <!-- Wishlist Controls -->
+      <div class="wishlist-controls">
+        <div class="wishlist-count">
+          <span id="itemCount">0</span> items saved
+        </div>
+        <button class="btn-clear-wishlist" id="clearWishlistBtn" style="display: none;">
+          <i class="fas fa-trash-alt"></i> Clear Wishlist
+        </button>
+      </div>
+
+      <!-- Wishlist Grid -->
+      <div id="wishlistGrid" class="wishlist-grid">
+        <!-- Wishlist items rendered here by JavaScript -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-simple">
+        <p>&copy; 2025 FoodFrenzy. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="index.html#about">About</a>
+          <a href="index.html#contact">Contact</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<script>
+const STORAGE_KEY = 'foodfrenzy_wishlist';
+const CART_KEY = 'foodfrenzy_cart';
+
+function loadWishlist(){ const raw = localStorage.getItem(STORAGE_KEY); return raw? JSON.parse(raw):[]; }
+function saveWishlist(w){ localStorage.setItem(STORAGE_KEY, JSON.stringify(w)); }
+function loadCart(){ const raw = localStorage.getItem(CART_KEY); return raw? JSON.parse(raw):[]; }
+function saveCart(c){ localStorage.setItem(CART_KEY, JSON.stringify(c)); }
+function formatCurrency(n){ return '$' + n.toFixed(2); }
+
+function renderWishlist(){
+  const list = loadWishlist();
+  const container = document.getElementById('wishlistList');
+  if (!container) return;
+  if (list.length === 0) {
+    container.innerHTML = '<div class="wishlist-empty"><i class="fas fa-heart"></i><p>Your wishlist is empty</p><a href="index.html#menu" class="btn btn-secondary">Browse Menu</a></div>';
+    updateNavBadge(0);
+    return;
+  }
+
+  const html = list.map(item=>`<div class="wishlist-item">
+    <div class="wishlist-item-image">${item.image && item.image.startsWith('assets')? '<img src="'+item.image+'" alt="'+item.name+'">':'<span style="font-size:2.5rem;">'+(item.image||'❤️')+'</span>'}</div>
+    <div class="wishlist-item-details">
+      <div class="wishlist-item-name">${item.name}</div>
+      <div class="wishlist-item-price">${formatCurrency(item.price)}</div>
+      <button class="add-to-cart-from-wishlist" data-id="${item.id}"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+    </div>
+    <button class="remove-btn" data-id="${item.id}"><i class="fas fa-trash"></i></button>
+  </div>`).join('');
+
+  container.innerHTML = '<div class="wishlist-items">'+html+'</div>';
+
+  document.querySelectorAll('.add-to-cart-from-wishlist').forEach(btn=>btn.addEventListener('click', ()=>{
+    const id = parseInt(btn.dataset.id);
+    addToCartFromWishlist(id);
+  }));
+  document.querySelectorAll('.wishlist-item .remove-btn').forEach(btn=>btn.addEventListener('click', ()=>{
+    const id = parseInt(btn.dataset.id);
+    removeFromWishlist(id);
+  }));
+
+  updateNavBadge(list.length);
+}
+
+function addToCartFromWishlist(id){
+  const cart = loadCart();
+  const wishlist = loadWishlist();
+  const item = wishlist.find(i=>i.id===id);
+  if (!item) return;
+  const existing = cart.find(i=>i.id===id);
+  if (existing) existing.quantity += 1; else cart.push({...item, quantity:1});
+  saveCart(cart);
+  // notify and keep item in wishlist
+  alert(item.name + ' added to cart');
+  // update nav badge
+  updateCartBadge();
+}
+
+function removeFromWishlist(id){
+  let list = loadWishlist();
+  list = list.filter(i=>i.id!==id);
+  saveWishlist(list);
+  renderWishlist();
+}
+
+function updateNavBadge(count){
+  const badge = document.querySelector('.wishlist-badge');
+  if (badge) { badge.textContent = count; badge.style.display = count>0? 'flex':'none'; }
+}
+function updateCartBadge(){ const cart = loadCart(); const badge = document.querySelector('.cart-badge'); if (badge) { const total = cart.reduce((s,i)=>s+i.quantity,0); badge.textContent = total; badge.style.display = total>0? 'flex':'none'; } }
+
+renderWishlist();
+</script>
+</body>
+</html>
