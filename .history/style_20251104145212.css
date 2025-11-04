@@ -201,11 +201,6 @@ img {
     transition: background-color var(--transition-speed) var(--transition-ease);
 }
 
-/* Ensure header is always visible on all pages */
-body {
-    padding-top: 70px;
-}
-
 .navbar {
     padding: 1rem 0;
 }
