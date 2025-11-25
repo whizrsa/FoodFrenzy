@@ -762,31 +762,17 @@ function setupEventListeners() {
         link.addEventListener('click', handleNavClick);
     });
     
-    if (elements.mobileToggle) {
-        elements.mobileToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMobileMenu();
-        });
-        elements.mobileToggle.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMobileMenu();
-        });
-    }
+    elements.mobileToggle.addEventListener('click', toggleMobileMenu);
+    elements.mobileToggle.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        toggleMobileMenu();
+    });
     
-    if (elements.themeToggle) {
-        elements.themeToggle.addEventListener('click', function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            toggleTheme();
-        });
-        elements.themeToggle.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleTheme();
-        });
-    }
+    elements.themeToggle.addEventListener('click', toggleTheme);
+    elements.themeToggle.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        toggleTheme();
+    });
     
     elements.orderNowBtn.addEventListener('click', () => scrollToSection('menu'));
     

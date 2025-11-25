@@ -585,8 +585,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize DOM elements after DOM is loaded
     elements = {
         // Navigation
-    // Only anchor links, exclude buttons with .nav-link styling
-    navLinks: document.querySelectorAll('a.nav-link'),
+        navLinks: document.querySelectorAll('.nav-link'),
         mobileToggle: document.getElementById('mobileToggle'),
         navMenu: document.getElementById('navMenu'),
         themeToggle: document.getElementById('themeToggle'),
@@ -663,50 +662,8 @@ function initializeApp() {
     setupEventListeners();
     updateCartBadge();
     updateWishlistBadge();
-    setupMobileThemeToggle();
     // Delay scroll animations slightly to ensure content is loaded first
     setTimeout(initScrollAnimations, 100);
-}
-
-// Setup mobile theme toggle
-function setupMobileThemeToggle() {
-    const mobileThemeToggle = document.getElementById('themeToggleMobile');
-    if (mobileThemeToggle) {
-        mobileThemeToggle.addEventListener('click', function() {
-            toggleTheme();
-            updateMobileThemeText();
-        });
-        updateMobileThemeText();
-    }
-    
-    // Close mobile menu after clicking cart or wishlist links
-    const navMenu = document.getElementById('navMenu');
-    if (navMenu) {
-        const mobileLinks = navMenu.querySelectorAll('.mobile-only a[href]');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                const menu = document.getElementById('navMenu');
-                const toggle = document.getElementById('mobileToggle');
-                if (menu && toggle) {
-                    menu.classList.remove('active');
-                    toggle.classList.remove('active');
-                }
-            });
-        });
-    }
-}
-
-function updateMobileThemeText() {
-    const isDark = document.body.classList.contains('dark-mode');
-    const themeText = document.getElementById('themeTextMobile');
-    const themeIcon = document.querySelector('#themeToggleMobile i');
-    
-    if (themeText) {
-        themeText.textContent = isDark ? 'Light Mode' : 'Dark Mode';
-    }
-    if (themeIcon) {
-        themeIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-    }
 }
 
 // ========== SCROLL ANIMATIONS ==========
@@ -725,8 +682,8 @@ function initScrollAnimations() {
         });
     }, observerOptions);
 
-    // Observe sections for scroll animations (skip hero and menu sections)
-    const sections = document.querySelectorAll('section:not(.hero):not(.food-menu-section)');
+    // Observe sections for scroll animations (skip hero section)
+    const sections = document.querySelectorAll('section:not(.hero)');
     sections.forEach(section => {
         // Check if section is already in viewport
         const rect = section.getBoundingClientRect();
@@ -745,14 +702,6 @@ function initScrollAnimations() {
         section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(section);
     });
-    
-    // Ensure menu section is always visible
-    const menuSection = document.querySelector('.food-menu-section');
-    if (menuSection) {
-        menuSection.style.opacity = '1';
-        menuSection.style.transform = 'translateY(0)';
-        menuSection.style.visibility = 'visible';
-    }
 }
 
 // ========== EVENT LISTENERS ==========
@@ -762,49 +711,17 @@ function setupEventListeners() {
         link.addEventListener('click', handleNavClick);
     });
     
-    if (elements.mobileToggle) {
-        elements.mobileToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMobileMenu();
-        });
-        elements.mobileToggle.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMobileMenu();
-        });
-    }
-    
-    if (elements.themeToggle) {
-        elements.themeToggle.addEventListener('click', function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            toggleTheme();
-        });
-        elements.themeToggle.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleTheme();
-        });
-    }
-    
+    elements.mobileToggle.addEventListener('click', toggleMobileMenu);
+    elements.themeToggle.addEventListener('click', toggleTheme);
     elements.orderNowBtn.addEventListener('click', () => scrollToSection('menu'));
     
     // Cart - Navigate to cart page
     elements.cartIcon.addEventListener('click', () => {
         window.location.href = 'cart.html';
     });
-    elements.cartIcon.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        window.location.href = 'cart.html';
-    });
     
     // Wishlist - Navigate to wishlist page
     elements.wishlistIcon.addEventListener('click', () => {
-        window.location.href = 'wishlist.html';
-    });
-    elements.wishlistIcon.addEventListener('touchend', function(e) {
-        e.preventDefault();
         window.location.href = 'wishlist.html';
     });
     
@@ -899,33 +816,21 @@ function setupEventListeners() {
 
 // ========== NAVIGATION ==========
 function handleNavClick(e) {
-    const href = e.currentTarget.getAttribute('href') || '';
-    // Internal section navigation (hash links)
-    if (href.startsWith('#')) {
-        e.preventDefault();
-        const section = href.slice(1);
-        scrollToSection(section);
-        // Close mobile menu if open
-        if (elements.navMenu) elements.navMenu.classList.remove('active');
-        if (elements.mobileToggle) elements.mobileToggle.classList.remove('active');
-        // Update active state
-        elements.navLinks.forEach(link => link.classList.remove('active'));
-        e.currentTarget.classList.add('active');
-        return;
-    }
-    // External/page navigation (e.g., cart.html, wishlist.html)
-    // Let the browser navigate normally; also close menu quickly for UX
-    if (elements.navMenu) elements.navMenu.classList.remove('active');
-    if (elements.mobileToggle) elements.mobileToggle.classList.remove('active');
+    e.preventDefault();
+    const href = e.target.getAttribute('href');
+    const section = href.substring(1);
+    scrollToSection(section);
+    
+    // Close mobile menu if open
+    elements.navMenu.classList.remove('active');
+    
+    // Update active state
+    elements.navLinks.forEach(link => link.classList.remove('active'));
+    e.target.classList.add('active');
 }
 
 function toggleMobileMenu() {
-    if (elements.navMenu) {
-        elements.navMenu.classList.toggle('active');
-    }
-    if (elements.mobileToggle) {
-        elements.mobileToggle.classList.toggle('active');
-    }
+    elements.navMenu.classList.toggle('active');
 }
 
 function scrollToSection(sectionId) {
@@ -1259,13 +1164,6 @@ function updateCartBadge() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     elements.cartBadge.textContent = totalItems;
     elements.cartBadge.style.display = totalItems > 0 ? 'flex' : 'none';
-    
-    // Update mobile badge
-    const mobileBadge = document.getElementById('cartBadgeMobile');
-    if (mobileBadge) {
-        mobileBadge.textContent = totalItems;
-        mobileBadge.style.display = totalItems > 0 ? 'inline' : 'none';
-    }
 }
 
 function toggleCart(show) {
@@ -1399,13 +1297,6 @@ function updateWishlistBadge() {
     const totalItems = wishlist.length;
     elements.wishlistBadge.textContent = totalItems;
     elements.wishlistBadge.style.display = totalItems > 0 ? 'flex' : 'none';
-    
-    // Update mobile badge
-    const mobileBadge = document.getElementById('wishlistBadgeMobile');
-    if (mobileBadge) {
-        mobileBadge.textContent = totalItems;
-        mobileBadge.style.display = totalItems > 0 ? 'inline' : 'none';
-    }
 }
 
 function toggleWishlist(show) {

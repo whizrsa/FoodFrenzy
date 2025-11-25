@@ -1701,13 +1701,11 @@ section {
     .nav-icons .cart-icon,
     .nav-icons .wishlist-icon {
         display: none;
-        pointer-events: none; /* extra safety: prevent accidental clicks */
     }
     
     .mobile-toggle {
         display: block !important;
         order: 4;
-        z-index: 1001; /* ensure on top of any siblings */
     }
     
     .nav-icons {

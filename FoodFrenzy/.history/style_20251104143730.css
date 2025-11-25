@@ -82,8 +82,6 @@ body.dark-mode {
 html {
     scroll-behavior: smooth;
     font-size: 16px;
-    -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -94,20 +92,6 @@ body {
     overflow-x: hidden;
     transition: background-color var(--transition-speed) var(--transition-ease),
                 color var(--transition-speed) var(--transition-ease);
-}
-
-/* Ensure all buttons are touchable on mobile */
-button,
-a,
-input[type="button"],
-input[type="submit"],
-.btn,
-.filter-btn,
-.add-to-cart-btn,
-.wishlist-heart-btn {
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    cursor: pointer;
 }
 
 /* Container */
@@ -167,10 +151,6 @@ img {
     cursor: pointer;
     transition: all var(--transition-speed) var(--transition-ease);
     white-space: nowrap;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    user-select: none;
-    -webkit-user-select: none;
 }
 
 .btn-primary {
@@ -178,8 +158,7 @@ img {
     color: white;
 }
 
-.btn-primary:hover,
-.btn-primary:active {
+.btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(255, 0, 0, 0.5);
 }
@@ -190,8 +169,7 @@ img {
     border: 2px solid var(--border-color);
 }
 
-.btn-secondary:hover,
-.btn-secondary:active {
+.btn-secondary:hover {
     background-color: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
@@ -221,11 +199,6 @@ img {
     box-shadow: 0 2px 10px var(--shadow-color);
     z-index: var(--z-header);
     transition: background-color var(--transition-speed) var(--transition-ease);
-}
-
-/* Ensure header is always visible on all pages */
-body {
-    padding-top: 70px;
 }
 
 .navbar {
@@ -259,11 +232,6 @@ body {
 .nav-menu {
     display: flex;
     gap: var(--spacing-lg);
-}
-
-/* Hide mobile-only items on desktop */
-.mobile-only {
-    display: none;
 }
 
 .nav-link {
@@ -305,20 +273,12 @@ body {
     cursor: pointer;
     padding: 0.5rem;
     transition: color var(--transition-speed) var(--transition-ease);
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    user-select: none;
-    -webkit-user-select: none;
 }
 
 .theme-toggle:hover,
 .cart-icon:hover,
 .wishlist-icon:hover,
-.mobile-toggle:hover,
-.theme-toggle:active,
-.cart-icon:active,
-.wishlist-icon:active,
-.mobile-toggle:active {
+.mobile-toggle:hover {
     color: var(--primary-color);
 }
 
@@ -356,19 +316,6 @@ body {
 
 .mobile-toggle {
     display: none;
-    background: transparent;
-    border: 2px solid var(--text-color);
-    border-radius: var(--radius-sm);
-    width: 44px;
-    height: 44px;
-    align-items: center;
-    justify-content: center;
-}
-
-.mobile-toggle:active {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    color: white;
 }
 
 /* Hero Section */
@@ -676,13 +623,9 @@ section {
     font-weight: 600;
     cursor: pointer;
     transition: all var(--transition-speed) var(--transition-ease);
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    user-select: none;
 }
 
-.filter-btn:hover,
-.filter-btn:active {
+.filter-btn:hover {
     background-color: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
@@ -792,13 +735,11 @@ section {
 
 .menu-content {
     padding: var(--spacing-md);
-    background-color: var(--bg-color);
 }
 
 .menu-title {
     font-size: 1.25rem;
     margin-bottom: var(--spacing-xs);
-    color: var(--text-color);
 }
 
 .menu-description {
@@ -1642,7 +1583,6 @@ section {
         transform: translateY(-100%);
         opacity: 0;
         transition: all var(--transition-speed) var(--transition-ease);
-        z-index: 999;
     }
     
     .nav-menu.active {
@@ -1650,87 +1590,8 @@ section {
         opacity: 1;
     }
     
-    /* Mobile only menu items */
-    .mobile-only {
+    .mobile-toggle {
         display: block;
-        border-top: 1px solid var(--border-color);
-        padding-top: var(--spacing-sm);
-        margin-top: var(--spacing-xs);
-    }
-    
-    .mobile-only:first-of-type {
-        margin-top: var(--spacing-md);
-    }
-    
-    .theme-toggle-mobile {
-        width: 100%;
-        background: transparent;
-        border: none;
-        color: var(--text-color);
-        font-size: 1rem;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-xs);
-        cursor: pointer;
-        transition: color var(--transition-speed) var(--transition-ease);
-    }
-    
-    .theme-toggle-mobile:hover {
-        color: var(--primary-color);
-    }
-    
-    .mobile-badge {
-        background-color: var(--primary-color);
-        color: white;
-        font-size: 0.75rem;
-        font-weight: 700;
-        padding: 0.15rem 0.5rem;
-        border-radius: 12px;
-        margin-left: auto;
-    }
-    
-    .nav-link {
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-xs);
-    }
-    
-    /* Hide desktop cart/wishlist/theme on mobile */
-    .nav-icons .theme-toggle,
-    .nav-icons .cart-icon,
-    .nav-icons .wishlist-icon {
-        display: none;
-        pointer-events: none; /* extra safety: prevent accidental clicks */
-    }
-    
-    .mobile-toggle {
-        display: block !important;
-        order: 4;
-        z-index: 1001; /* ensure on top of any siblings */
-    }
-    
-    .nav-icons {
-        gap: 0.5rem;
-    }
-    
-    .theme-toggle,
-    .cart-icon,
-    .wishlist-icon,
-    .mobile-toggle {
-        padding: 0.75rem;
-        font-size: 1.5rem;
-    }
-    
-    .cart-badge,
-    .wishlist-badge {
-        font-size: 0.65rem;
-        width: 18px;
-        height: 18px;
-    }
-    
-    .hide-mobile {
-        display: none;
     }
     
     .hero-title {
@@ -3125,221 +2986,4 @@ body.dark-mode .checkout-page-main {
     .step-label {
         font-size: 0.7rem;
     }
-}
-
-/* ===================================
-   NEW MENU SECTION STYLES - FIXED
-   =================================== */
-
-.food-menu-section {
-    background-color: #ffffff;
-    padding: 4rem 0;
-    min-height: 100vh;
-}
-
-.food-items-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.food-item-card {
-    background: #ffffff;
-    border: 2px solid #e0e0e0;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-}
-
-.food-item-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 24px rgba(255, 0, 0, 0.2);
-    border-color: #FF0000;
-}
-
-.food-item-img {
-    width: 100%;
-    height: 220px;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, #950101, #3D0000);
-}
-
-.food-item-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.diet-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background-color: #28a745;
-    color: #ffffff;
-    padding: 4px 12px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    z-index: 5;
-}
-
-.food-item-info {
-    padding: 1.5rem;
-    background-color: #ffffff;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.food-item-name {
-    font-size: 1.375rem;
-    font-weight: 700;
-    color: #000000;
-    margin: 0 0 0.75rem 0;
-    font-family: 'Playfair Display', serif;
-}
-
-.food-item-desc {
-    font-size: 0.9375rem;
-    color: #555555;
-    line-height: 1.6;
-    margin: 0 0 1.25rem 0;
-    flex: 1;
-}
-
-.food-item-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-    padding-top: 1rem;
-    border-top: 1px solid #e0e0e0;
-}
-
-.food-item-price {
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: #FF0000;
-}
-
-.food-item-card .add-to-cart-btn {
-    background-color: #FF0000;
-    color: #ffffff;
-    border: none;
-    padding: 0.625rem 1.25rem;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9375rem;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    user-select: none;
-}
-
-.food-item-card .add-to-cart-btn:hover,
-.food-item-card .add-to-cart-btn:active {
-    background-color: #950101;
-    transform: scale(1.05);
-}
-
-.food-item-card .add-to-cart-btn:active {
-    transform: scale(0.98);
-}
-
-/* Dark mode support for new menu */
-body.dark-mode .food-menu-section {
-    background-color: #000000;
-}
-
-body.dark-mode .food-item-card {
-    background: #1a0000;
-    border-color: #3D0000;
-}
-
-body.dark-mode .food-item-info {
-    background-color: #1a0000;
-}
-
-body.dark-mode .food-item-name {
-    color: #ffffff;
-}
-
-body.dark-mode .food-item-desc {
-    color: #cccccc;
-}
-
-body.dark-mode .food-item-bottom {
-    border-top-color: #3D0000;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .food-items-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 1.5rem;
-    }
-    
-    .food-item-img {
-        height: 180px;
-    }
-}
-
-@media (max-width: 480px) {
-    .food-items-grid {
-        grid-template-columns: 1fr;
-        gap: 1.25rem;
-    }
-    
-    .food-item-name {
-        font-size: 1.25rem;
-    }
-    
-    .food-item-price {
-        font-size: 1.5rem;
-    }
-    
-    /* Ensure all buttons are clickable on small screens */
-    button,
-    .btn,
-    .filter-btn,
-    .add-to-cart-btn,
-    .mobile-toggle,
-    .theme-toggle {
-        min-height: 44px;
-        min-width: 44px;
-        touch-action: manipulation;
-        -webkit-tap-highlight-color: rgba(255, 0, 0, 0.1);
-    }
-    
-    /* Prevent zoom on input focus */
-    input,
-    select,
-    textarea {
-        font-size: 16px;
-    }
-}
-
-/* Fix for iOS Safari button issues */
-button {
-    -webkit-appearance: button;
-    appearance: button;
-}
-
-input[type="button"],
-input[type="submit"],
-button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
 }

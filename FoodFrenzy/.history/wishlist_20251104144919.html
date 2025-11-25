@@ -266,26 +266,6 @@ document.getElementById('clearWishlistBtn').addEventListener('click', () => {
 
 // Initial render
 renderWishlist();
-
-// Mobile menu toggle
-document.getElementById('mobileToggle').addEventListener('click', function() {
-  document.getElementById('navMenu').classList.toggle('active');
-});
-
-// Theme toggle
-document.getElementById('themeToggle').addEventListener('click', function() {
-  document.body.classList.toggle('dark-mode');
-  const isDark = document.body.classList.contains('dark-mode');
-  this.querySelector('i').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-  localStorage.setItem('foodfrenzy_theme', isDark ? 'dark' : 'light');
-});
-
-// Load theme preference
-const savedTheme = localStorage.getItem('foodfrenzy_theme');
-if (savedTheme === 'dark') {
-  document.body.classList.add('dark-mode');
-  document.getElementById('themeToggle').querySelector('i').className = 'fas fa-sun';
-}
 </script>
 </body>
 </html>
